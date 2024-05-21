@@ -9,6 +9,11 @@
       become: true
       vars: {state: absent}
   post_tasks:
+    - name: Destroy zfs snapshotter dataset
+      become: true
+      shell: zfs destroy -r {{snapshotter_zfs_dataset}}
+      when: snapshotter == "zfs" and snapshotter_zfs_dataset is defined
+      ignore_errors: true
     - name: Reboot and wait for node to come back up
       become: true
       reboot:
