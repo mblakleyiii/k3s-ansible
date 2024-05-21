@@ -69,6 +69,5 @@
   when: ansible_os_family in [ "RedHat", "Suse" ]
 
 - name: Create zfs snapshotter dataset
-  include_tasks: umount_with_children.yml
   shell: zfs create -o mountpoint=/var/lib/rancher/k3s/agent/containerd/io.containerd.snapshotter.v1.zfs {{snapshotter_zfs_dataset}}
   when: snapshotter == "zfs" and snapshotter_zfs_dataset is defined
