@@ -67,3 +67,8 @@
     path: /etc/sudoers
     validate: 'visudo -cf %s'
   when: ansible_os_family in [ "RedHat", "Suse" ]
+
+- name: Create zfs snapshotter dataset
+  become: true
+  shell: zfs create -o mountpoint=/var/lib/rancher/k3s/agent/containerd/io.containerd.snapshotter.v1.zfs {{snapshotter_zfs_dataset}}
+  when: snapshotter == "zfs"

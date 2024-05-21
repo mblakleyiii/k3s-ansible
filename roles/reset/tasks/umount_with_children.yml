@@ -1,4 +1,9 @@
 ---
+- name: Destroy zfs snapshotter dataset
+  become: true
+  shell: zfs destroy -r {{snapshotter_zfs_dataset}}
+  when: snapshotter_zfs_dataset is defined
+
 - name: Get the list of mounted filesystems
   shell: set -o pipefail && cat /proc/mounts | awk '{ print $2}' | grep -E "^{{ mounted_fs }}"
   register: get_mounted_filesystems
